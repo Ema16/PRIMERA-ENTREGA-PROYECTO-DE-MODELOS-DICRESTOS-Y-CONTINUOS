@@ -58,7 +58,18 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             ValidarDatos();
             Datos();
             Operacion();
-            Operacion1();
+            if (N<=(0.05*poblacion))
+            {
+                Operacion1();
+            }
+            else if(poblacion==0)
+            {
+                Operacion1();
+            }
+            else{
+                MessageBox.Show("ES POBLACION FINITA");
+            }
+           // Operacion1();
             //AQUIE ME QUEDE
             
                
