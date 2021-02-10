@@ -15,10 +15,12 @@ namespace MODELOS_DISCRETOS_CONTINUOS
     public partial class Form1 : Form
     {
         Calculo metodos = new Calculo();
-        private int N;
+        private int n;
         private int X;
         private int X1;
         private int X2;
+        private decimal P;
+        private int N = 0;
         private string opcion = "";
         private string opcionRes = "";
 
@@ -27,9 +29,12 @@ namespace MODELOS_DISCRETOS_CONTINUOS
         private double Media = 0;
         private double DesviacionEstandar = 0;
         private double Varianza = 0;
+        private double FC = 0;
+        private double Sesgo = 0;
+        private double Curtosis = 0;
+        private double Mediana = 0;
+        private String TipoSesgo = "";
 
-        private decimal P;
-        private int poblacion = 0;
 
         private double[] resultados;
         public Form1()
@@ -39,6 +44,11 @@ namespace MODELOS_DISCRETOS_CONTINUOS
 
         private void button1_Click(object sender, EventArgs e)
         {
+            TipoSesgo = "";
+            FC = 0;
+            Sesgo = 0;
+            Curtosis = 0;
+            Mediana = 0;
             resultados = null;
             Respuesta = 0;
             Media = 0;
@@ -57,17 +67,30 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             
             ValidarDatos();
             Datos();
-            Operacion();
-            if (N<=(0.05*poblacion))
+
+            if (X!=0)
+            {
+                Operacion();
+            }
+            else if (X1!=0 && X2!=0)
+            {
+                Operacion();
+            }
+            else{
+               // MessageBox.Show("No tiene X");
+            }
+            
+            if (n<=(0.05*N))
             {
                 Operacion1();
             }
-            else if(poblacion==0)
+            else if(N==0)
             {
                 Operacion1();
             }
             else{
-                MessageBox.Show("ES POBLACION FINITA");
+                //MessageBox.Show("ES POBLACION FINITA");
+                Operacion2();
             }
            // Operacion1();
             //AQUIE ME QUEDE
@@ -113,37 +136,109 @@ namespace MODELOS_DISCRETOS_CONTINUOS
         }
 
         public void MostrarDatos() {
-            listRespuestas.Items.Add("Probabilidad :"+Respuesta);
-            listRespuestas.Items.Add("Media :" + Media);
-            listRespuestas.Items.Add("Varianza :" + Varianza);
-            listRespuestas.Items.Add("Desviacion Estandar :" + DesviacionEstandar);
+            if (Respuesta!=0)
+            {
+                listRespuestas.Items.Add("Probabilidad :            " + Respuesta);
+            }
+            else
+            {
+             //   listRespuestas.Items.Add("Probabilidad : ---- ");
+            }
+                
+                listRespuestas.Items.Add("Media :                   " + Media);
+            if (Varianza!=0)
+            {
+                listRespuestas.Items.Add("Varianza :                " + Varianza);
+            }
+            else
+            {
+              //  listRespuestas.Items.Add("Varianza : ----");
+            }
+                
+
+            if (FC!=0)
+            {
+                listRespuestas.Items.Add("Factor de Correccion :    " + FC);
+            }
+            else
+            {
+              //  listRespuestas.Items.Add("Factor de Correccion : ----");
+            }
+               
+                listRespuestas.Items.Add("Desviacion Estandar :     " + DesviacionEstandar);
+                listRespuestas.Items.Add("Sesgo :                   " + Sesgo);
+                listRespuestas.Items.Add("Curtosis :                " + Curtosis);
+            if (Mediana!=0)
+            {
+                listRespuestas.Items.Add("Mediana :                 " + Mediana);
+            }
+            else
+            {
+              //  listRespuestas.Items.Add("Mediana : ----");
+            }
+            if (TipoSesgo!="")
+            {
+                listRespuestas.Items.Add("**************Tipo de Sesgo************");
+                listRespuestas.Items.Add("**************" + TipoSesgo + "************");
+            }
+                
+            try
+            {
+                pictureBox.Image = Image.FromFile(TipoSesgo+".PNG");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("El archivo seleccionado no es un tipo de imagen valido");
+            }
 
         }
 
+        //Metodo de desviacion, media, varianza en la poblacion Infinita
         public void Operacion1()
         {
-            Media = metodos.Media(N,P);
-            DesviacionEstandar = metodos.DesviacionEstandar(N,P);
-            Varianza = metodos.Varianza(N,P);
+            Media = metodos.Media(n,P);
+            DesviacionEstandar = metodos.DesviacionEstandar(n,P);
+            Varianza = metodos.Varianza(n,P);
+            Sesgo = metodos.Sesgo(n,P);
+            Curtosis = metodos.Curtosis(n,P);
         }
 
+        //Metodo de deviacion, media, FC para la poblacion Finita
+        public void Operacion2() {
+            Media = metodos.Media(n,P);
+            FC = metodos.FactorCorreccion(N,n);
+            DesviacionEstandar = metodos.DesviacionPFinita(N,n,P);
+            Sesgo = metodos.Sesgo(n, P);
+            Curtosis = metodos.Curtosis(n, P);
+
+        }
+
+        //Operacion para la Distribucion Binomial
         public void Operacion()
         {
+            Resultados datos = new Resultados();
             int contador = 0;
             double UltimoResultado = 0;
             chart1.Palette = ChartColorPalette.Pastel;
             chart1.Titles.Add("Representacion Grafica");
 
-            resultados = metodos.DistribucionBinomial(P, N, X);
+            resultados = metodos.DistribucionBinomial(P, n, X);
 
             if (X1 != 0 && X2 != 0)
             {
-                UltimoResultado = metodos.Resultado2(resultados, X1, X2, opcionRes);
+                datos = metodos.Resultado2(resultados, X1, X2, opcionRes);
+                UltimoResultado = datos.result;
+                Mediana = datos.mediana;
             }
             else
             {
-                UltimoResultado = metodos.resultados(resultados,opcionRes, X);
+                datos = metodos.resultados(resultados,opcionRes,X);
+                UltimoResultado = datos.result;
+                Mediana = datos.mediana;
+               // UltimoResultado = metodos.resultados(resultados,opcionRes, X);
             }
+            Media = metodos.Media(n, P);
+            TipoSesgo = metodos.TipoSesgo(Media,Mediana);
             chart1.Series.Add("x"+"       "+"f(x)");
             Respuesta = UltimoResultado;
             bool res = Double.IsNaN(Respuesta);
@@ -172,6 +267,41 @@ namespace MODELOS_DISCRETOS_CONTINUOS
 
         }
        
+        public void Datos()
+        {
+            try
+            {
+                CultureInfo culture = new CultureInfo("en-US");
+                n = Int32.Parse(txtN.Text.Trim());
+                P = Convert.ToDecimal(txtP.Text.Trim(), culture);
+                if (txtPoblacion.Text.Trim()!="")
+                {
+                    N = Int32.Parse(txtPoblacion.Text.Trim());
+                }
+                else
+                {
+                    N = 0;
+                }
+                AsignarValores(opcion);
+                //X con un solo dato
+                
+               
+           /*     
+                X5 = Int32.Parse(txtX5.Text.Trim());
+                X6 = Int32.Parse(txtX6.Text.Trim());
+
+                //X rango de 2
+                X3 = Int32.Parse(txtX3.Text.Trim());
+                X4 = Int32.Parse(txtX4.Text.Trim());
+           */
+               
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
         public void AsignarValores(string opcion)
         {
             switch (opcion)
@@ -207,41 +337,6 @@ namespace MODELOS_DISCRETOS_CONTINUOS
                     X2 = Int32.Parse(txtX8.Text.Trim());
                     break;
             }
-        }
-        public void Datos()
-        {
-            try
-            {
-                CultureInfo culture = new CultureInfo("en-US");
-                N = Int32.Parse(txtN.Text.Trim());
-                P = Convert.ToDecimal(txtP.Text.Trim(), culture);
-                if (txtPoblacion.Text.Trim()!="")
-                {
-                    poblacion = Int32.Parse(txtPoblacion.Text.Trim());
-                }
-                else
-                {
-                    poblacion = 0;
-                }
-                AsignarValores(opcion);
-                //X con un solo dato
-                
-               
-           /*     
-                X5 = Int32.Parse(txtX5.Text.Trim());
-                X6 = Int32.Parse(txtX6.Text.Trim());
-
-                //X rango de 2
-                X3 = Int32.Parse(txtX3.Text.Trim());
-                X4 = Int32.Parse(txtX4.Text.Trim());
-           */
-               
-            }
-            catch (Exception ex)
-            {
-
-            }
-
         }
         private void textN_Validated(object sender, EventArgs e)
         {
@@ -409,6 +504,51 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             this.txtX6.Enabled = false;
             this.txtX.Enabled = false;
 
+        }
+
+        private void radioSI_CheckedChanged(object sender, EventArgs e)
+        {
+            this.radioX.Enabled = true;
+            this.radioX1.Enabled = true;
+            this.radioX2.Enabled = true;
+            this.radioX3.Enabled = true;
+            this.radioX4.Enabled = true;
+            this.radioX5.Enabled = true;
+            this.radioX7.Enabled = true;
+            this.txtX7.Enabled = true;
+            this.txtX8.Enabled = true;
+            this.txtX1.Enabled = true;
+            this.txtX2.Enabled = true;
+            this.txtX3.Enabled = true;
+            this.txtX4.Enabled = true;
+            this.txtX5.Enabled = true;
+            this.txtX6.Enabled = true;
+            this.txtX.Enabled = true;
+        }
+
+        private void radioNO_CheckedChanged(object sender, EventArgs e)
+        {
+            X = 0;
+            X1 = 0;
+            X2 = 0;
+            opcion = "";
+            opcionRes = "";
+            this.radioX.Enabled = false;
+            this.radioX1.Enabled = false;
+            this.radioX2.Enabled = false;
+            this.radioX3.Enabled = false;
+            this.radioX4.Enabled = false;
+            this.radioX5.Enabled = false;
+            this.radioX7.Enabled = false;
+            this.txtX7.Enabled = false;
+            this.txtX8.Enabled = false;
+            this.txtX1.Enabled = false;
+            this.txtX2.Enabled = false;
+            this.txtX3.Enabled = false;
+            this.txtX4.Enabled = false;
+            this.txtX5.Enabled = false;
+            this.txtX6.Enabled = false;
+            this.txtX.Enabled = false;
         }
     }
 }
