@@ -15,8 +15,20 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             if (numero == 0 || numero == 1)
                 return 1;
             return (numero) * Factorial(numero - 1);
+
         }
 
+        public double Factorial1(int numero)
+        {
+            int i = 2;
+            double fac = 1;
+            while (i<=numero)
+            {
+                fac *= i;
+                i++;
+            }
+            return fac;
+        }
 
         //Combinatoria
         public double Combinatoria(int n, int x)
@@ -339,5 +351,56 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             return respuesta;
 
         }
+
+
+        //DISTRIBUCIONHIPERGEOMETRICA
+        //La que x esta por si acaso
+        public double[] DistribucionHipergeometrica(int n, int K, int N, int x)
+        {
+            double dividendo = 0;
+            double divisor = 0;
+            double[] resultados = new double[n + 1];
+            for (int i = 0; i <= n; i++)
+            {
+                dividendo = ((double)(Factorial1(N-K))*(Factorial1(K))*(Factorial1(n))*(Factorial1(N-n)));
+                divisor = ((double)(Factorial1(n-i))*(Factorial1(N-K-n+i))*Factorial1(i)*(Factorial1(K-i))*Factorial1(N));
+                resultados[i] = ((double)(dividendo/divisor));
+                // resultados[i] = ((Combinatoria(n, i)) * (Potencia((double)p, i)) * (Potencia((double)(1 - p), (n - i))));
+            }
+            return resultados;
+        }
+
+
+        //Media 
+        public double MediaHipergeometrica(int n, int K, int N)
+        {
+            double resultado = 0;
+            resultado = (double)((n*K)/(N));
+            return resultado;
+        }
+
+        //Devuelve la Probabilidad de exito
+        public double ProbabilidadExito(int K, int N)
+        {
+            double resultado = 0;
+            resultado = ((double)(K/N));
+            return resultado;
+        }
+
+        public double DEHconP(int n, int p, int N)
+        {
+            double resultado = 0;
+            resultado = ((double)(Math.Sqrt(n*p*(1-p)))*(double)(Math.Sqrt((N-n)/(N-1))));
+            return resultado;
+        }
+
+        public double DEHsinP(int n, int K, int N)
+        {
+            double resultado = 0;
+            resultado = ((Math.Sqrt((double)(n*K)/(N)))*((1-((double)K / (double)N)))*(Math.Sqrt((double)(N-n)/(N-1))));
+            return resultado;
+        }
+
+
     }
 }

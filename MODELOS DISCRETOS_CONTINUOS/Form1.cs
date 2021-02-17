@@ -20,10 +20,12 @@ namespace MODELOS_DISCRETOS_CONTINUOS
         private int X1;
         private int X2;
         private decimal P;
+        private decimal PHP;
         private int N = 0;
         private string opcion = "";
         private string opcionRes = "";
-
+        private string opcionDisitribucion = "";
+        private bool entero = true;
         //Respuestas
         private double Respuesta = 0;
         private double Media = 0;
@@ -40,6 +42,9 @@ namespace MODELOS_DISCRETOS_CONTINUOS
         public Form1()
         {
             InitializeComponent();
+            comboBox1.Items.Add("Distribucion Binomial");
+            comboBox1.Items.Add("Distribucion Hipergeométrica");
+            comboBox1.SelectedIndex=0;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -68,37 +73,62 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             ValidarDatos();
             Datos();
 
-            if (X!=0)
+            if (!X.Equals(""))
             {
                 Operacion();
             }
-            else if (X1!=0 && X2!=0)
+            else if (!X1.Equals("") && !X2.Equals(""))
             {
                 Operacion();
             }
             else{
                // MessageBox.Show("No tiene X");
             }
+
+
+            if (opcionDisitribucion =="Binomial")
+            {
+                Binomial();   
+            }
+            else if (opcionDisitribucion == "Hipergeometrica")
+            {
+                if (n>=(N*0.20))
+                {
+                    DH();
+                }
+                else
+                {
+                    if (entero)
+                    {
+                        P = P / 100;
+                    }
+                    MessageBox.Show("Calculo con Distribucion Binomial");
+                    Binomial();
+                }
+
+                
+            }
             
-            if (n<=(0.05*N))
+            MostrarDatos();
+        }
+
+        public void Binomial()
+        {
+            if (n <= (0.05 * N))
             {
                 Operacion1();
             }
-            else if(N==0)
+            else if (N == 0)
             {
                 Operacion1();
             }
-            else{
+            else
+            {
                 //MessageBox.Show("ES POBLACION FINITA");
                 Operacion2();
             }
-           // Operacion1();
+            // Operacion1();
             //AQUIE ME QUEDE
-            
-               
-           
-            
-            MostrarDatos();
         }
 
         public void ValidarDatos()
@@ -213,6 +243,25 @@ namespace MODELOS_DISCRETOS_CONTINUOS
 
         }
 
+        public void DH()
+        {
+            if (entero)
+            {
+                Media = metodos.MediaHipergeometrica(n, (int)P, N);
+                Sesgo = metodos.Sesgo(n, P/100);
+                Curtosis = metodos.Curtosis(n, P/100);
+
+
+            }
+            else
+            {
+                Media = metodos.Media(n, PHP);
+                Sesgo = metodos.Sesgo(n, P);
+                Curtosis = metodos.Curtosis(n, P/100);
+            }  
+            DesviacionEstandar = metodos.DEHsinP(n,(int)P,N);
+        }
+
         //Operacion para la Distribucion Binomial
         public void Operacion()
         {
@@ -222,7 +271,15 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             chart1.Palette = ChartColorPalette.Pastel;
             chart1.Titles.Add("Representacion Grafica");
 
-            resultados = metodos.DistribucionBinomial(P, n, X);
+            if (opcionDisitribucion=="Binomial")
+            {
+                resultados = metodos.DistribucionBinomial(P, n, X);
+            }
+            else
+            {
+                resultados = metodos.DistribucionHipergeometrica(n,(int)P,N,X);
+            }
+            
 
             if (X1 != 0 && X2 != 0)
             {
@@ -269,11 +326,36 @@ namespace MODELOS_DISCRETOS_CONTINUOS
        
         public void Datos()
         {
+            entero = true;
+            CultureInfo culture = new CultureInfo("en-US");
             try
             {
-                CultureInfo culture = new CultureInfo("en-US");
+                if (opcionDisitribucion == "Binomial")
+                {
+                    P = Convert.ToDecimal(txtP.Text.Trim(), culture);
+                }
+                else if(opcionDisitribucion == "Hipergeometrica")
+                {
+                    char[] P0 = txtP.Text.Trim().ToCharArray();
+                    for (int i = 0; i < P0.Length; i++)
+                    {
+                        if (P0[i] == '.')
+                        {
+                            entero = false;
+                        }
+                    }
+                    if (entero)
+                    {
+                        P = Convert.ToInt32(txtP.Text.Trim(), culture);
+                    }
+                    else
+                    {
+                        PHP = Convert.ToDecimal(txtP.Text.Trim(), culture);
+                    }
+
+                }
+
                 n = Int32.Parse(txtN.Text.Trim());
-                P = Convert.ToDecimal(txtP.Text.Trim(), culture);
                 if (txtPoblacion.Text.Trim()!="")
                 {
                     N = Int32.Parse(txtPoblacion.Text.Trim());
@@ -549,6 +631,37 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             this.txtX5.Enabled = false;
             this.txtX6.Enabled = false;
             this.txtX.Enabled = false;
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var item = this.comboBox1.GetItemText(this.comboBox1.SelectedItem);
+            if (item!=null)
+            {
+                if (item.Equals("Distribucion Binomial"))
+                {
+                    // MessageBox.Show("1 "+item);
+                    label2.Text = "P (probabilidad de exito)";
+                    label1.Text = "n (numero de eventos)";
+                    this.Controls.Add(label2);
+                    this.Controls.Add(label1);
+                    opcionDisitribucion = "Binomial";
+                }
+                else
+                {
+                    // MessageBox.Show("2 " + item);
+                    label2.Text = "K (Exitos en Poblacion)";
+                    label1.Text = "n (Tamaño Muestra)";
+                    this.Controls.Add(label2);
+                    this.Controls.Add(label1);
+                    opcionDisitribucion = "Hipergeometrica";
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Elija una opcion");
+            }
         }
     }
 }
