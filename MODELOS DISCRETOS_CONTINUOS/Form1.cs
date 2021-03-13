@@ -907,5 +907,15 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             form2.Show();
 
         }
+
+        private void poissonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            comboBox1.Visible = false;
+        }
+
+        private void binomialToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            comboBox1.Visible = true;
+        }
     }
 }
