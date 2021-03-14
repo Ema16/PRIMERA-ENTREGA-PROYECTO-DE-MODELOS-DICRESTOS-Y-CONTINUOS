@@ -22,12 +22,16 @@ namespace MODELOS_DISCRETOS_CONTINUOS
         private decimal P;
         private decimal PHP;
         private int N = 0;
+        private decimal PT = 0;
         private string opcion = "";
         private string opcionRes = "";
         private string opcionDisitribucion = "";
+        private string opcionDistribucion2 = "";
+
         private bool entero = true;
         //Respuestas
         private double Respuesta = 0;
+        private double Respuesta2 = 0;
         private double Media = 0;
         private double DesviacionEstandar = 0;
         private double Varianza = 0;
@@ -38,17 +42,32 @@ namespace MODELOS_DISCRETOS_CONTINUOS
         private String TipoSesgo = "";
 
 
-        private double[] resultados;
+        public double[] resultados;
+        public double[] comparacion;
         public Form1()
         {
             InitializeComponent();
+            button2.Visible =false;
+            button3.Visible = false;
+            button4.Visible = false;
+            txtPorTole.Visible = false;
+            label7.Visible = false;
+
             comboBox1.Items.Add("Distribucion Binomial");
             comboBox1.Items.Add("Distribucion Hipergeométrica");
+            comboBox1.Items.Add("Comparacion Binomal vs Hipergeometrica");
+            comboBox1.Items.Add("Muestreo para Aceptacion de Lotes");
             comboBox1.SelectedIndex=0;
+            dataGridView1.Columns.Add("X","X");
+            dataGridView1.Columns.Add("px","P(X)");
+            dataGridView1.Columns.Add("pa", "Probabilidad Acumulada");
+            dataGridView1.Columns.Add("por", "%");
+            dataGridView1.Columns.Add("porA", "% Acumulado");
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            PT = 0;
             TipoSesgo = "";
             FC = 0;
             Sesgo = 0;
@@ -56,6 +75,7 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             Mediana = 0;
             resultados = null;
             Respuesta = 0;
+            Respuesta2 = 0;
             Media = 0;
             DesviacionEstandar = 0;
             Varianza = 0;
@@ -63,6 +83,24 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             X1 = 0;
             X1 = 0;
             X = 0;
+            dataGridView1.Rows.Clear();
+            
+
+            foreach (var series in chart2.Series)
+            {
+                series.Points.Clear();
+            }
+            chart2.Titles.Clear();
+            chart2.Series.Clear();
+
+            foreach (var series in chart3.Series)
+            {
+                series.Points.Clear();
+            }
+            chart3.Titles.Clear();
+            chart3.Series.Clear();
+
+
             foreach (var series in chart1.Series)
             {
                 series.Points.Clear();
@@ -102,11 +140,27 @@ namespace MODELOS_DISCRETOS_CONTINUOS
                     {
                         P = P / 100;
                     }
-                    MessageBox.Show("Calculo con Distribucion Binomial");
+                   // MessageBox.Show("Calculo con Distribucion Binomial");
                     Binomial();
                 }
 
                 
+            }
+            else if (opcionDisitribucion=="Comparacion")
+            {
+                if (n >= (N * 0.20))
+                {
+                    DH();
+                }
+                else
+                {
+                    if (entero)
+                    {
+                        P = P / 100;
+                    }
+                   // MessageBox.Show("Calculo con Distribucion Binomial");
+                    Binomial();
+                }
             }
             
             MostrarDatos();
@@ -166,13 +220,33 @@ namespace MODELOS_DISCRETOS_CONTINUOS
         }
 
         public void MostrarDatos() {
-            if (Respuesta!=0)
+            double auxiliar = 0;
+            if (Respuesta!=0 && opcionDisitribucion != "Comparacion")
             {
                 listRespuestas.Items.Add("Probabilidad :            " + Respuesta);
             }
             else
             {
              //   listRespuestas.Items.Add("Probabilidad : ---- ");
+            }
+
+            if (Respuesta != 0 && opcionDisitribucion == "Comparacion")
+            {
+                listRespuestas.Items.Add("Probabilidad Binomial:  " + Respuesta);
+            }
+            if (Respuesta2 != 0)
+            {
+                listRespuestas.Items.Add("Probabilidad Hipergeometrica :  " + Respuesta2);
+
+                if (Respuesta>Respuesta2)
+                {
+                    auxiliar = Respuesta*100 - Respuesta2*100;
+                }
+                else
+                {
+                    auxiliar = Respuesta2*100 - Respuesta*100;
+                }
+                listRespuestas.Items.Add("Variacion Porcentual:  " + auxiliar);
             }
                 
                 listRespuestas.Items.Add("Media :                   " + Media);
@@ -226,15 +300,18 @@ namespace MODELOS_DISCRETOS_CONTINUOS
         //Metodo de desviacion, media, varianza en la poblacion Infinita
         public void Operacion1()
         {
+            listRespuestas.Items.Add("**************POBLACION INFINITA************");
             Media = metodos.Media(n,P);
             DesviacionEstandar = metodos.DesviacionEstandar(n,P);
             Varianza = metodos.Varianza(n,P);
             Sesgo = metodos.Sesgo(n,P);
             Curtosis = metodos.Curtosis(n,P);
+
         }
 
         //Metodo de deviacion, media, FC para la poblacion Finita
         public void Operacion2() {
+            listRespuestas.Items.Add("**************POBLACION FINITA************");
             Media = metodos.Media(n,P);
             FC = metodos.FactorCorreccion(N,n);
             DesviacionEstandar = metodos.DesviacionPFinita(N,n,P);
@@ -242,6 +319,7 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             Curtosis = metodos.Curtosis(n, P);
 
         }
+
 
         public void DH()
         {
@@ -265,21 +343,78 @@ namespace MODELOS_DISCRETOS_CONTINUOS
         //Operacion para la Distribucion Binomial
         public void Operacion()
         {
+
+            int auxiliar=0;
             Resultados datos = new Resultados();
+            double PA = 0;
             int contador = 0;
             double UltimoResultado = 0;
+            double UltimoResultado2 = 0;
+
             chart1.Palette = ChartColorPalette.Pastel;
             chart1.Titles.Add("Representacion Grafica");
+            ChartArea CA = chart1.ChartAreas[0];
+            CA.AxisX.ScaleView.Zoomable = true;
+            CA.CursorX.AutoScroll = true;
+            CA.CursorX.IsUserSelectionEnabled = true;
+
+
+            chart2.Palette = ChartColorPalette.Pastel;
+            chart2.Titles.Add("%");
+
+            chart3.Palette = ChartColorPalette.Pastel;
+            chart3.Titles.Add("% Acumulado");
 
             if (opcionDisitribucion=="Binomial")
             {
                 resultados = metodos.DistribucionBinomial(P, n, X);
+                if (opcionDistribucion2 != "Muestreo")
+                {
+                    PT = 0;
+                }
             }
-            else
+            else if(opcionDisitribucion == "Hipergeometrica")
             {
-                resultados = metodos.DistribucionHipergeometrica(n,(int)P,N,X);
+                if (n >= (N * 0.20))
+                {
+                    resultados = metodos.DistribucionHipergeometrica(n, (int)P, N, X);
+                }
+                else
+                {
+                    if (entero)
+                    {
+                        P = P / 100;
+                    }
+                    MessageBox.Show("Calculo con Distribucion Binomial");
+                    resultados = metodos.DistribucionBinomial(P, n, X);
+                }
+
+
+                if (opcionDistribucion2 != "Muestreo")
+                {
+                    PT = 0;
+                }
+                
+            }else if (opcionDisitribucion == "Comparacion")
+            {
+                if (opcionDistribucion2 != "Muestreo")
+                {
+                    PT = 0;
+                }
+
+                resultados = metodos.DistribucionBinomial((P/100), n, X);
+                comparacion = metodos.DistribucionHipergeometrica(n, (int)P, N, X);
+                //Aca nos quedamos   
             }
-            
+
+
+            //Aca incluimos lo de la comparacion
+            if (opcionDisitribucion == "Comparacion")
+            {
+                datos = metodos.resultados(comparacion,opcionRes,X);
+                UltimoResultado2 = datos.result;
+
+            }
 
             if (X1 != 0 && X2 != 0)
             {
@@ -297,7 +432,10 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             Media = metodos.Media(n, P);
             TipoSesgo = metodos.TipoSesgo(Media,Mediana);
             chart1.Series.Add("x"+"       "+"f(x)");
+            chart2.Series.Add("x" + "       " + "%");
+            chart3.Series.Add("x" + "       " + "% Acumulado");
             Respuesta = UltimoResultado;
+            Respuesta2 = UltimoResultado2;
             bool res = Double.IsNaN(Respuesta);
             if (res)
             {
@@ -309,19 +447,59 @@ namespace MODELOS_DISCRETOS_CONTINUOS
                     //Titulos
 
                     Series serie = chart1.Series.Add(i + " . " + resultados[i].ToString());
+                    Series serie2 = chart2.Series.Add(i + " . " + (resultados[i]*100).ToString());
+                    Series serie3;
 
                     //Cantidades
                     // serie.Label = resultados[i].ToString();
+                    if (contador == 0)
+                    {
+                        PA = resultados[i];
+                        if (PT!=0 && (PA * 100) <= ((double)PT * 100))
+                        {
+                            dataGridView1.Rows.Add(contador, resultados[i], resultados[i], resultados[i] * 100, resultados[i] * 100);
+                            dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Yellow;
+                        }
+                        else
+                        {
+                            dataGridView1.Rows.Add(contador, resultados[i], resultados[i], resultados[i] * 100, resultados[i] * 100);
+                        }
+                        serie3 = chart3.Series.Add(i + " . " + (PA * 100).ToString());
+                    }
+                    else
+                    {
+                        PA = resultados[i]+PA;
+                        serie3 = chart3.Series.Add(i + " . " + (PA*100).ToString());
+                        if (PT != 0 && (PA*100)<=((double)PT*100))
+                        {
+                            dataGridView1.Rows.Add(contador, resultados[i], PA, resultados[i] * 100, PA * 100);
+                            dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Yellow;
+                            auxiliar = i;
+                        }
+                        else
+                        {
+                            if (auxiliar!=0)
+                            {
+                                dataGridView1.Rows[auxiliar].DefaultCellStyle.BackColor = Color.LightGreen;
+                            }
+                            dataGridView1.Rows.Add(contador, resultados[i], PA, resultados[i] * 100, PA * 100);
+                        }
+                        
+                    }
 
-                    serie.Points.AddXY(contador, resultados[i]);
+                ///    auxiliar = 0;
+                    chart1.Series[0].Points.AddXY(contador,resultados[i]);
+                    // serie.Points.AddXY(contador, resultados[i]);
+                    chart2.Series[0].Points.AddXY(contador,resultados[i]*100);
+                    chart3.Series[0].Points.AddXY(contador, PA*100);
                     contador++;
 
                 }
 
             }
-            
-            
-
+            button2.Visible = true;
+            button3.Visible = true;
+            button4.Visible = true;
         }
        
         public void Datos()
@@ -334,7 +512,7 @@ namespace MODELOS_DISCRETOS_CONTINUOS
                 {
                     P = Convert.ToDecimal(txtP.Text.Trim(), culture);
                 }
-                else if(opcionDisitribucion == "Hipergeometrica")
+                else if(opcionDisitribucion == "Hipergeometrica" || opcionDisitribucion== "Comparacion")
                 {
                     char[] P0 = txtP.Text.Trim().ToCharArray();
                     for (int i = 0; i < P0.Length; i++)
@@ -364,6 +542,12 @@ namespace MODELOS_DISCRETOS_CONTINUOS
                 {
                     N = 0;
                 }
+                
+                if (txtPorTole.Text.Trim()!="")
+                {
+                    PT = Convert.ToDecimal(txtPorTole.Text.Trim(), culture);
+                }
+                
                 AsignarValores(opcion);
                 //X con un solo dato
                 
@@ -632,7 +816,6 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             this.txtX6.Enabled = false;
             this.txtX.Enabled = false;
         }
-
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             var item = this.comboBox1.GetItemText(this.comboBox1.SelectedItem);
@@ -640,21 +823,48 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             {
                 if (item.Equals("Distribucion Binomial"))
                 {
+                    opcionDistribucion2 = "";
                     // MessageBox.Show("1 "+item);
+                    txtPorTole.Visible = false;
+                    label7.Visible = false;
                     label2.Text = "P (probabilidad de exito)";
                     label1.Text = "n (numero de eventos)";
                     this.Controls.Add(label2);
                     this.Controls.Add(label1);
                     opcionDisitribucion = "Binomial";
                 }
-                else
+                else if(item.Equals("Distribucion Hipergeométrica"))
                 {
+                    opcionDistribucion2 = "";
                     // MessageBox.Show("2 " + item);
+                    txtPorTole.Visible = false;
+                    label7.Visible = false;
                     label2.Text = "K (Exitos en Poblacion)";
                     label1.Text = "n (Tamaño Muestra)";
                     this.Controls.Add(label2);
                     this.Controls.Add(label1);
                     opcionDisitribucion = "Hipergeometrica";
+                }else if (item.Equals("Comparacion Binomal vs Hipergeometrica"))
+                {
+                    opcionDistribucion2 = "";
+                    txtPorTole.Visible = false;
+                    label7.Visible = false;
+                    label2.Text = "K (Exitos en Poblacion)";
+                    label1.Text = "n (Tamaño Muestra)";
+                    this.Controls.Add(label2);
+                    this.Controls.Add(label1);
+                    opcionDisitribucion = "Comparacion";
+                }else if (item.Equals("Muestreo para Aceptacion de Lotes"))
+                {
+                    
+                    txtPorTole.Visible = true;
+                    label7.Visible = true;
+                    label2.Text = "P (probabilidad de exito)";
+                    label1.Text = "n (numero de eventos)";
+                    this.Controls.Add(label2);
+                    this.Controls.Add(label1);
+                    opcionDisitribucion = "Binomial";
+                    opcionDistribucion2 = "Muestreo";
                 }
 
             }
@@ -662,6 +872,40 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             {
                 MessageBox.Show("Elija una opcion");
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string opcion = "";
+            opcion = "normal";
+
+            Form2 form2 = new Form2();
+            form2.Mostrar(resultados, opcion);
+            form2.Show();
+            /*
+            
+            */
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string opcion = "";
+            opcion = "%";
+            Form2 form2 = new Form2();
+            form2.Mostrar(resultados,opcion);
+            form2.Show();
+
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string opcion = "";
+            opcion = "%Acumulado";
+            Form2 form2 = new Form2();
+            form2.Mostrar(resultados,opcion);
+            form2.Show();
+
         }
     }
 }

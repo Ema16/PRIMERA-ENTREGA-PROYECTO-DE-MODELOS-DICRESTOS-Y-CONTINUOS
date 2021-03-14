@@ -9,6 +9,10 @@ namespace MODELOS_DISCRETOS_CONTINUOS
 {
     class Calculo
     {
+        class A : Calculo
+        {
+            public void MethodB() { Console.WriteLine("A.MethodB()"); }
+        }
         //Factorial
         public double Factorial(int numero)
         {
@@ -45,16 +49,26 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             return resultado;
         }
 
+        /*
+        //Redondear dos decimales
+        public static double Truncate(this double value, int decimales)
+        {
+            double aux_value = Math.Pow(10, decimales);
+            return (Math.Truncate(value * aux_value) / aux_value);
+        }
+        */
+
         //Aca nos quedamos
         //En el for podemos cambiar n a x
         //Distribucion Binomial
         public double[] DistribucionBinomial(decimal p, int n, int x)
         {
-
+            double value;
             double[] resultados = new double[n + 1];
             for (int i = 0; i <= n; i++)
             {
-                resultados[i] = ((Combinatoria(n, i)) * (Potencia((double)p, i)) * (Potencia((double)(1 - p), (n - i))));
+                value = ((Combinatoria(n, i)) * (Potencia((double)p, i)) * (Potencia((double)(1 - p), (n - i))));
+                resultados[i] = (Math.Truncate(value*10000)/10000);
             }
             return resultados;
         }
@@ -124,7 +138,7 @@ namespace MODELOS_DISCRETOS_CONTINUOS
         public double Sesgo(int n, decimal p)
         {
             double resultado;
-            resultado = (((double)((1 - p)))/(Math.Sqrt((double)(n*p*(1-p)))));
+            resultado = (((double)((1 - p)-p))/(Math.Sqrt((double)(n*p*(1-p)))));
             return resultado;
         }
         //Curtosis
@@ -211,7 +225,7 @@ namespace MODELOS_DISCRETOS_CONTINUOS
                 // return result;
 
                 default:
-                    MessageBox.Show("UPS ALGO SALIO MAL");
+                  //  MessageBox.Show("UPS ALGO SALIO MAL");
                     break;
 
 
@@ -357,6 +371,7 @@ namespace MODELOS_DISCRETOS_CONTINUOS
         //La que x esta por si acaso
         public double[] DistribucionHipergeometrica(int n, int K, int N, int x)
         {
+            double value;
             double dividendo = 0;
             double divisor = 0;
             double[] resultados = new double[n + 1];
@@ -364,7 +379,8 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             {
                 dividendo = ((double)(Factorial1(N-K))*(Factorial1(K))*(Factorial1(n))*(Factorial1(N-n)));
                 divisor = ((double)(Factorial1(n-i))*(Factorial1(N-K-n+i))*Factorial1(i)*(Factorial1(K-i))*Factorial1(N));
-                resultados[i] = ((double)(dividendo/divisor));
+                value = ((double)(dividendo/divisor));
+                resultados[i] = (Math.Truncate(value*10000)/10000);
                 // resultados[i] = ((Combinatoria(n, i)) * (Potencia((double)p, i)) * (Potencia((double)(1 - p), (n - i))));
             }
             return resultados;

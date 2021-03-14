@@ -29,8 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -68,17 +72,28 @@
             this.radioNO = new System.Windows.Forms.RadioButton();
             this.label8 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chart3 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtPorTole = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorN)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorP)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart3)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 69);
+            this.label1.Location = new System.Drawing.Point(34, 42);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(113, 13);
             this.label1.TabIndex = 0;
@@ -87,7 +102,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 99);
+            this.label2.Location = new System.Drawing.Point(27, 75);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(120, 13);
             this.label2.TabIndex = 1;
@@ -104,7 +119,7 @@
             // 
             // txtN
             // 
-            this.txtN.Location = new System.Drawing.Point(139, 66);
+            this.txtN.Location = new System.Drawing.Point(184, 39);
             this.txtN.Name = "txtN";
             this.txtN.Size = new System.Drawing.Size(100, 20);
             this.txtN.TabIndex = 3;
@@ -113,7 +128,7 @@
             // 
             // txtP
             // 
-            this.txtP.Location = new System.Drawing.Point(139, 99);
+            this.txtP.Location = new System.Drawing.Point(184, 72);
             this.txtP.Name = "txtP";
             this.txtP.Size = new System.Drawing.Size(100, 20);
             this.txtP.TabIndex = 4;
@@ -153,13 +168,13 @@
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(156, 223);
+            chartArea6.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea6);
+            legend6.Name = "Legend1";
+            this.chart1.Legends.Add(legend6);
+            this.chart1.Location = new System.Drawing.Point(18, 225);
             this.chart1.Name = "chart1";
-            this.chart1.Size = new System.Drawing.Size(914, 392);
+            this.chart1.Size = new System.Drawing.Size(323, 411);
             this.chart1.TabIndex = 7;
             this.chart1.Text = "chart1";
             // 
@@ -322,7 +337,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(51, 131);
+            this.label4.Location = new System.Drawing.Point(73, 111);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(74, 13);
             this.label4.TabIndex = 31;
@@ -330,7 +345,7 @@
             // 
             // txtPoblacion
             // 
-            this.txtPoblacion.Location = new System.Drawing.Point(139, 131);
+            this.txtPoblacion.Location = new System.Drawing.Point(184, 104);
             this.txtPoblacion.Name = "txtPoblacion";
             this.txtPoblacion.Size = new System.Drawing.Size(100, 20);
             this.txtPoblacion.TabIndex = 32;
@@ -405,11 +420,100 @@
             this.comboBox1.TabIndex = 40;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(697, 225);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.Size = new System.Drawing.Size(553, 411);
+            this.dataGridView1.TabIndex = 41;
+            // 
+            // chart2
+            // 
+            chartArea5.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            this.chart2.Legends.Add(legend5);
+            this.chart2.Location = new System.Drawing.Point(347, 225);
+            this.chart2.Name = "chart2";
+            this.chart2.Size = new System.Drawing.Size(344, 205);
+            this.chart2.TabIndex = 42;
+            this.chart2.Text = "chart2";
+            // 
+            // chart3
+            // 
+            chartArea4.Name = "ChartArea1";
+            this.chart3.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart3.Legends.Add(legend4);
+            this.chart3.Location = new System.Drawing.Point(347, 436);
+            this.chart3.Name = "chart3";
+            this.chart3.Size = new System.Drawing.Size(344, 200);
+            this.chart3.TabIndex = 43;
+            this.chart3.Text = "chart3";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(266, 613);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 44;
+            this.button2.Text = "Zoom";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(616, 613);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 45;
+            this.button3.Text = "Zoom";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(616, 407);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 46;
+            this.button4.Text = "Zoom";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(18, 135);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(129, 13);
+            this.label7.TabIndex = 47;
+            this.label7.Text = "Porcentaje de Tolerancia:";
+            // 
+            // txtPorTole
+            // 
+            this.txtPorTole.Location = new System.Drawing.Point(184, 137);
+            this.txtPorTole.Name = "txtPorTole";
+            this.txtPorTole.Size = new System.Drawing.Size(100, 20);
+            this.txtPorTole.TabIndex = 48;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1262, 648);
+            this.Controls.Add(this.txtPorTole);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.chart3);
+            this.Controls.Add(this.chart2);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.radioNO);
@@ -451,6 +555,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -495,6 +602,14 @@
         private System.Windows.Forms.RadioButton radioNO;
         private System.Windows.Forms.RadioButton radioSI;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart3;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox txtPorTole;
+        private System.Windows.Forms.Label label7;
     }
 }
 
