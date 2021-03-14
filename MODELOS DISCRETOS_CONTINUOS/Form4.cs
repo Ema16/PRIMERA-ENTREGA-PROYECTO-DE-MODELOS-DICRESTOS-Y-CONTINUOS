@@ -20,10 +20,22 @@ namespace MODELOS_DISCRETOS_CONTINUOS
         private int X2;
         private int Mayor;
         private int Menor;
+        private double Mediana;
+        private double distribucion;
         public double[] resultados;
         public Form4()
         {
             InitializeComponent();
+
+            comboBox1.Items.Add("x");
+            comboBox1.Items.Add("x>");
+            comboBox1.Items.Add("x<");
+            comboBox1.Items.Add("x≥");
+            comboBox1.Items.Add("x≤");
+            comboBox1.Items.Add("x1≤x2");
+            comboBox1.Items.Add("x1≥x2");
+            comboBox1.SelectedIndex = 0;
+
             dataGridView1.Columns.Add("X", "X");
             dataGridView1.Columns.Add("px", "P(X)");
             dataGridView1.Columns.Add("por", "%");
@@ -31,11 +43,25 @@ namespace MODELOS_DISCRETOS_CONTINUOS
 
         private void btnCalcular_Click(object sender, EventArgs e)
         {
+
+            dataGridView1.Rows.Clear();
+            foreach (var series in chart1.Series)
+            {
+                series.Points.Clear();
+            }
+            chart1.Titles.Clear();
+            chart1.Series.Clear();
+
             int auxiliar = 0;
             N = 0;
             P = 0;
             X1 = 0;
             X2 = 0;
+            Mayor = 0;
+            Menor = 0;
+            Mediana = 0;
+            listRespuesta.Items.Clear();
+
             ValidarDatos();
 
             if ((double)P > 0.10)
@@ -50,10 +76,8 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             {
                 MessageBox.Show("Resolver por medio de distribucion Binomial");
             }
-            Operacion();
-
-
         }
+
         public void ValidarDatos()
         {
             int cont = 0;
@@ -80,7 +104,8 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             else
             {
                 Datos();
-                MessageBox.Show(N + " - " + P + " - " + X1 + " - " + X2);
+                Operacion();
+                //  MessageBox.Show(N + " - " + P + " - " + X1 + " - " + X2);
             }
 
         }
@@ -92,6 +117,7 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             {
                 P = Convert.ToDecimal(textP.Text.Trim(), culture);
                 N = Convert.ToInt32(textN.Text.Trim(), culture);
+
                 if (textX1.Text.Trim()!="")
                 {
                     X1 = Convert.ToInt32(textX1.Text.Trim(), culture);
@@ -131,30 +157,112 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             chart1.Palette = ChartColorPalette.Pastel;
             chart1.Titles.Add("Representacion Grafica");
             Calculo calculo = new Calculo();
+            List<int> datos = new List<int>();
             resultados = calculo.DistribucionPoisson(N, Mayor, Menor, P);
 
             for (int i=0; i<resultados.Length;i++)
             {
-
-                dataGridView1.Rows.Add(contador, resultados[i], resultados[i]*100);
+                if (X1!=0 && X2!=0)
+                {
+                    dataGridView1.Rows.Add(Menor+i, resultados[i], resultados[i] * 100);
+                }
+                else
+                {
+                    dataGridView1.Rows.Add(contador, resultados[i], resultados[i] * 100);
+                    distribucion = resultados[Mayor];   
+                }
+                
 
                 Series serie = chart1.Series.Add(i + " . " + resultados[i].ToString());
                 chart1.Series[0].Points.AddXY(contador, resultados[i]);
                 contador++;
             }
 
+
+
+
            
-            
-
-
-
+            listRespuesta.Items.Add("Distribucion= "+distribucion);
             listRespuesta.Items.Add("Media = "+calculo.Media(N,P));
             listRespuesta.Items.Add("Desviacion Estandar = " + calculo.DesviacionEstandar(N, P));
             listRespuesta.Items.Add("Sesgo = " + calculo.Sesgo(N,P));
             listRespuesta.Items.Add("Curtosis = " + calculo.Curtosis(N, P));
+            if (X1!=0 && X2!=0)
+            {
+                for (int i=Menor; i<=Mayor; i++)
+                {
+                    datos.Add(i);
+                }
+                Mediana = calculo.Mediana(datos);
 
+                listRespuesta.Items.Add("Mediana = " + Mediana);
+                
+            }
+            else
+            {
+                listRespuesta.Items.Add("Mediana = " + Mayor);
+                Mediana = Mayor;
+            }
+            listRespuesta.Items.Add("Tipo de Sesgo = "+calculo.TipoSesgo(calculo.Media(N, P), Mediana));
 
         }
 
+
+        private void comboBox1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            var item = this.comboBox1.GetItemText(this.comboBox1.SelectedItem);
+            if (item != null)
+            {
+                if (item.Equals("x"))
+                {
+                    textX2.Enabled = false;
+                    textX2.Text = "";
+                }
+                else if (item.Equals("x>"))
+                {
+                    textX2.Enabled = false;
+                    textX2.Text = "";
+                    X2 = 0;
+                }
+                else if (item.Equals("x<"))
+                {
+                    textX2.Enabled = false;
+                    textX2.Text = "";
+                    X2 = 0;
+                }
+                else if (item.Equals("x≥"))
+                {
+                    textX2.Enabled = false;
+                    textX2.Text = "";
+                    X2 = 0;
+                }
+                else if (item.Equals("x≤"))
+                {
+                    textX2.Enabled = false;
+                    textX2.Text = "";
+                    X2 = 0;
+                }
+                else if (item.Equals("x1≥x2"))
+                {
+                    textX2.Enabled = true;
+                    textX2.Text = "";
+                }
+                else if (item.Equals("x1≤x2"))
+                {
+                    textX2.Enabled = true;
+                    textX2.Text = "";
+                }
+
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string opcion = "";
+            opcion = "normal";
+            Form2 form2 = new Form2();
+            form2.Mostrar(resultados, opcion);
+            form2.Show();
+        }
     }
 }

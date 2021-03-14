@@ -426,7 +426,7 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             {
                 for (int i = Menor; i <= Mayor; i++)
                 {
-                    resultados[auxiliar] = ((double)Math.Pow((2.71828), (double)(n * p)) * ((double)Math.Pow((double)(n * p),i) / (Factorial1(i))));
+                    resultados[auxiliar] = (((double)Math.Pow(Math.E, (double)-(n * p))) * ((double)Math.Pow((double)(n * p),i) / (Factorial1(i))));
                     auxiliar++;
                 }
             }
@@ -436,8 +436,7 @@ namespace MODELOS_DISCRETOS_CONTINUOS
                 {
                     for (int i = 0; i <= Mayor; i++)
                     {
-                        resultados[auxiliar] = ((double)Math.Pow((2.71828), (double)(n * p)) * ((double)Math.Pow((double)(n * p), i) / (Factorial1(i))));
-                        auxiliar++;
+                        resultados[i] = (((double)Math.Pow(Math.E, (double)-(n * p))) * (((double)Math.Pow((double)(n * p), i) / (Factorial1(i)))));
                     }
                 }
             }
