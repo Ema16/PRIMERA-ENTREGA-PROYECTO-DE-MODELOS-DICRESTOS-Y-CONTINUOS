@@ -417,6 +417,31 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             return resultado;
         }
 
-
+        //*********************DISTRIBUCION DE POISSON*****************//
+        public double[] DistribucionPoisson(int n, int Mayor, int Menor, decimal p)
+        {
+            int auxiliar = 0;
+            double[] resultados = new double[(Mayor-Menor)+1];
+            if (Mayor != 0 && Menor != 0)
+            {
+                for (int i = Menor; i <= Mayor; i++)
+                {
+                    resultados[auxiliar] = (((double)Math.Pow(Math.E, (double)-(n * p))) * ((double)Math.Pow((double)(n * p),i) / (Factorial1(i))));
+                    auxiliar++;
+                }
+            }
+            else
+            {
+                if (Mayor!=0)
+                {
+                    for (int i = 0; i <= Mayor; i++)
+                    {
+                        resultados[i] = (((double)Math.Pow(Math.E, (double)-(n * p))) * (((double)Math.Pow((double)(n * p), i) / (Factorial1(i)))));
+                    }
+                }
+            }
+            
+            return resultados;
+        }
     }
 }

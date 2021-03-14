@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -93,7 +93,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(34, 42);
+            this.label1.Location = new System.Drawing.Point(34, 60);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(113, 13);
             this.label1.TabIndex = 0;
@@ -102,7 +102,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(27, 75);
+            this.label2.Location = new System.Drawing.Point(27, 93);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(120, 13);
             this.label2.TabIndex = 1;
@@ -111,7 +111,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(448, 54);
+            this.label3.Location = new System.Drawing.Point(448, 72);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(98, 13);
             this.label3.TabIndex = 2;
@@ -119,7 +119,7 @@
             // 
             // txtN
             // 
-            this.txtN.Location = new System.Drawing.Point(184, 39);
+            this.txtN.Location = new System.Drawing.Point(184, 57);
             this.txtN.Name = "txtN";
             this.txtN.Size = new System.Drawing.Size(100, 20);
             this.txtN.TabIndex = 3;
@@ -128,7 +128,7 @@
             // 
             // txtP
             // 
-            this.txtP.Location = new System.Drawing.Point(184, 72);
+            this.txtP.Location = new System.Drawing.Point(184, 90);
             this.txtP.Name = "txtP";
             this.txtP.Size = new System.Drawing.Size(100, 20);
             this.txtP.TabIndex = 4;
@@ -137,7 +137,7 @@
             // 
             // txtX
             // 
-            this.txtX.Location = new System.Drawing.Point(446, 75);
+            this.txtX.Location = new System.Drawing.Point(446, 93);
             this.txtX.Name = "txtX";
             this.txtX.Size = new System.Drawing.Size(30, 20);
             this.txtX.TabIndex = 5;
@@ -146,7 +146,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(15, 196);
+            this.button1.Location = new System.Drawing.Point(15, 214);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 6;
@@ -168,54 +168,54 @@
             // 
             // chart1
             // 
-            chartArea6.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.chart1.Legends.Add(legend6);
-            this.chart1.Location = new System.Drawing.Point(18, 225);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
+            this.chart1.Location = new System.Drawing.Point(18, 267);
             this.chart1.Name = "chart1";
-            this.chart1.Size = new System.Drawing.Size(323, 411);
+            this.chart1.Size = new System.Drawing.Size(323, 369);
             this.chart1.TabIndex = 7;
             this.chart1.Text = "chart1";
             // 
             // txtX1
             // 
-            this.txtX1.Location = new System.Drawing.Point(447, 99);
+            this.txtX1.Location = new System.Drawing.Point(447, 117);
             this.txtX1.Name = "txtX1";
             this.txtX1.Size = new System.Drawing.Size(27, 20);
             this.txtX1.TabIndex = 11;
             // 
             // txtX2
             // 
-            this.txtX2.Location = new System.Drawing.Point(447, 128);
+            this.txtX2.Location = new System.Drawing.Point(447, 146);
             this.txtX2.Name = "txtX2";
             this.txtX2.Size = new System.Drawing.Size(27, 20);
             this.txtX2.TabIndex = 12;
             // 
             // txtX5
             // 
-            this.txtX5.Location = new System.Drawing.Point(575, 92);
+            this.txtX5.Location = new System.Drawing.Point(575, 110);
             this.txtX5.Name = "txtX5";
             this.txtX5.Size = new System.Drawing.Size(27, 20);
             this.txtX5.TabIndex = 16;
             // 
             // txtX6
             // 
-            this.txtX6.Location = new System.Drawing.Point(575, 124);
+            this.txtX6.Location = new System.Drawing.Point(575, 142);
             this.txtX6.Name = "txtX6";
             this.txtX6.Size = new System.Drawing.Size(27, 20);
             this.txtX6.TabIndex = 17;
             // 
             // txtX3
             // 
-            this.txtX3.Location = new System.Drawing.Point(392, 167);
+            this.txtX3.Location = new System.Drawing.Point(392, 185);
             this.txtX3.Name = "txtX3";
             this.txtX3.Size = new System.Drawing.Size(19, 20);
             this.txtX3.TabIndex = 18;
             // 
             // txtX4
             // 
-            this.txtX4.Location = new System.Drawing.Point(417, 168);
+            this.txtX4.Location = new System.Drawing.Point(417, 186);
             this.txtX4.Name = "txtX4";
             this.txtX4.Size = new System.Drawing.Size(23, 20);
             this.txtX4.TabIndex = 19;
@@ -223,7 +223,7 @@
             // radioX
             // 
             this.radioX.AutoSize = true;
-            this.radioX.Location = new System.Drawing.Point(392, 78);
+            this.radioX.Location = new System.Drawing.Point(392, 96);
             this.radioX.Name = "radioX";
             this.radioX.Size = new System.Drawing.Size(48, 17);
             this.radioX.TabIndex = 20;
@@ -235,7 +235,7 @@
             // radioX1
             // 
             this.radioX1.AutoSize = true;
-            this.radioX1.Location = new System.Drawing.Point(389, 102);
+            this.radioX1.Location = new System.Drawing.Point(389, 120);
             this.radioX1.Name = "radioX1";
             this.radioX1.Size = new System.Drawing.Size(48, 17);
             this.radioX1.TabIndex = 21;
@@ -247,7 +247,7 @@
             // radioX2
             // 
             this.radioX2.AutoSize = true;
-            this.radioX2.Location = new System.Drawing.Point(389, 125);
+            this.radioX2.Location = new System.Drawing.Point(389, 143);
             this.radioX2.Name = "radioX2";
             this.radioX2.Size = new System.Drawing.Size(48, 17);
             this.radioX2.TabIndex = 22;
@@ -259,7 +259,7 @@
             // radioX3
             // 
             this.radioX3.AutoSize = true;
-            this.radioX3.Location = new System.Drawing.Point(318, 168);
+            this.radioX3.Location = new System.Drawing.Point(318, 186);
             this.radioX3.Name = "radioX3";
             this.radioX3.Size = new System.Drawing.Size(62, 17);
             this.radioX3.TabIndex = 23;
@@ -271,7 +271,7 @@
             // radioX4
             // 
             this.radioX4.AutoSize = true;
-            this.radioX4.Location = new System.Drawing.Point(523, 93);
+            this.radioX4.Location = new System.Drawing.Point(523, 111);
             this.radioX4.Name = "radioX4";
             this.radioX4.Size = new System.Drawing.Size(46, 17);
             this.radioX4.TabIndex = 24;
@@ -283,7 +283,7 @@
             // radioX5
             // 
             this.radioX5.AutoSize = true;
-            this.radioX5.Location = new System.Drawing.Point(518, 127);
+            this.radioX5.Location = new System.Drawing.Point(518, 145);
             this.radioX5.Name = "radioX5";
             this.radioX5.Size = new System.Drawing.Size(51, 17);
             this.radioX5.TabIndex = 25;
@@ -311,7 +311,7 @@
             // radioX7
             // 
             this.radioX7.AutoSize = true;
-            this.radioX7.Location = new System.Drawing.Point(483, 170);
+            this.radioX7.Location = new System.Drawing.Point(483, 188);
             this.radioX7.Name = "radioX7";
             this.radioX7.Size = new System.Drawing.Size(62, 17);
             this.radioX7.TabIndex = 28;
@@ -322,14 +322,14 @@
             // 
             // txtX7
             // 
-            this.txtX7.Location = new System.Drawing.Point(542, 167);
+            this.txtX7.Location = new System.Drawing.Point(542, 185);
             this.txtX7.Name = "txtX7";
             this.txtX7.Size = new System.Drawing.Size(26, 20);
             this.txtX7.TabIndex = 29;
             // 
             // txtX8
             // 
-            this.txtX8.Location = new System.Drawing.Point(574, 167);
+            this.txtX8.Location = new System.Drawing.Point(574, 185);
             this.txtX8.Name = "txtX8";
             this.txtX8.Size = new System.Drawing.Size(27, 20);
             this.txtX8.TabIndex = 30;
@@ -337,7 +337,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(73, 111);
+            this.label4.Location = new System.Drawing.Point(73, 129);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(74, 13);
             this.label4.TabIndex = 31;
@@ -345,7 +345,7 @@
             // 
             // txtPoblacion
             // 
-            this.txtPoblacion.Location = new System.Drawing.Point(184, 104);
+            this.txtPoblacion.Location = new System.Drawing.Point(184, 122);
             this.txtPoblacion.Name = "txtPoblacion";
             this.txtPoblacion.Size = new System.Drawing.Size(100, 20);
             this.txtPoblacion.TabIndex = 32;
@@ -380,7 +380,7 @@
             // radioSI
             // 
             this.radioSI.AutoSize = true;
-            this.radioSI.Location = new System.Drawing.Point(184, 164);
+            this.radioSI.Location = new System.Drawing.Point(184, 182);
             this.radioSI.Name = "radioSI";
             this.radioSI.Size = new System.Drawing.Size(35, 17);
             this.radioSI.TabIndex = 36;
@@ -392,7 +392,7 @@
             // radioNO
             // 
             this.radioNO.AutoSize = true;
-            this.radioNO.Location = new System.Drawing.Point(225, 164);
+            this.radioNO.Location = new System.Drawing.Point(225, 182);
             this.radioNO.Name = "radioNO";
             this.radioNO.Size = new System.Drawing.Size(41, 17);
             this.radioNO.TabIndex = 37;
@@ -404,7 +404,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(12, 168);
+            this.label8.Location = new System.Drawing.Point(12, 186);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(166, 13);
             this.label8.TabIndex = 39;
@@ -414,7 +414,7 @@
             // 
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(18, 12);
+            this.comboBox1.Location = new System.Drawing.Point(18, 30);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(221, 21);
             this.comboBox1.TabIndex = 40;
@@ -433,25 +433,25 @@
             // 
             // chart2
             // 
-            chartArea5.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.chart2.Legends.Add(legend5);
-            this.chart2.Location = new System.Drawing.Point(347, 225);
+            chartArea2.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart2.Legends.Add(legend2);
+            this.chart2.Location = new System.Drawing.Point(347, 267);
             this.chart2.Name = "chart2";
-            this.chart2.Size = new System.Drawing.Size(344, 205);
+            this.chart2.Size = new System.Drawing.Size(344, 186);
             this.chart2.TabIndex = 42;
             this.chart2.Text = "chart2";
             // 
             // chart3
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chart3.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chart3.Legends.Add(legend4);
-            this.chart3.Location = new System.Drawing.Point(347, 436);
+            chartArea1.Name = "ChartArea1";
+            this.chart3.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart3.Legends.Add(legend1);
+            this.chart3.Location = new System.Drawing.Point(347, 459);
             this.chart3.Name = "chart3";
-            this.chart3.Size = new System.Drawing.Size(344, 200);
+            this.chart3.Size = new System.Drawing.Size(344, 177);
             this.chart3.TabIndex = 43;
             this.chart3.Text = "chart3";
             // 
@@ -477,7 +477,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(616, 407);
+            this.button4.Location = new System.Drawing.Point(616, 430);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 46;
@@ -488,7 +488,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(18, 135);
+            this.label7.Location = new System.Drawing.Point(18, 153);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(129, 13);
             this.label7.TabIndex = 47;
@@ -496,7 +496,7 @@
             // 
             // txtPorTole
             // 
-            this.txtPorTole.Location = new System.Drawing.Point(184, 137);
+            this.txtPorTole.Location = new System.Drawing.Point(184, 155);
             this.txtPorTole.Name = "txtPorTole";
             this.txtPorTole.Size = new System.Drawing.Size(100, 20);
             this.txtPorTole.TabIndex = 48;
