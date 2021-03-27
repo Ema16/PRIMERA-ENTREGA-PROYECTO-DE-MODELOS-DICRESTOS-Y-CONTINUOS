@@ -34,6 +34,7 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             comboBox1.Items.Add("x≤");
             comboBox1.Items.Add("x1≤x2");
             comboBox1.Items.Add("x1≥x2");
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox1.SelectedIndex = 0;
 
             dataGridView1.Columns.Add("X", "X");

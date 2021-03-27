@@ -31,5 +31,13 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             this.Hide();
             form.Show();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Colas formulario = new Colas();
+            this.Hide();
+            formulario.Show();
+
+        }
     }
 }
