@@ -443,5 +443,146 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             
             return resultados;
         }
+
+
+        //CALCULOS DE LA TEORIA DE COLAS
+        public double LS(double lambda, double mu)
+        {
+            double resultado = 0;
+            resultado = (double)(lambda) / ((double)(mu)-(double)(lambda));
+            return resultado;
+        }
+
+        public double WS(double lambda, double mu)
+        {
+            double resultado = 0;
+            resultado = (double)(1) / ((double)(mu) - (double)(lambda));
+            return resultado;
+        }
+
+        public double Lq(double lambda, double mu)
+        {
+            double resultado = 0;
+            resultado = (double)(Math.Pow(lambda,2)) / (((double)mu)*((double)(mu) - (double)(lambda)));
+            return resultado;
+        }
+
+        public double Wq(double lambda, double mu)
+        {
+            double resultado = 0;
+            resultado = (double)(lambda) / (((double)mu) * ((double)(mu) - (double)(lambda)));
+            return resultado;
+        }
+
+        public double Porcentaje(double lambda, double mu)
+        {
+            double resultado = 0;
+            resultado = (double)(lambda) / ((double)(mu));
+            return resultado;
+        }
+
+        public double ProbabilidadDesocupado(double porcentaje)
+        {
+            double resultado = 0;
+            resultado = (double)(1- (double)porcentaje);
+            return resultado;
+        }
+
+        public double[] probabilidaN(double lambda, double mu, int N)
+        {
+            double[] resultados = new double[N+1];
+            for (int i=0; i<=N; i++)
+            {
+                resultados[i] = ((1 - ((double)(lambda / mu))) * (Math.Pow((double)(lambda / mu), (double)i)));
+            }
+            return resultados;
+        }
+
+        public double esperarCola(double mu, double porcentaje,int tiempo)
+        {
+            double resultado = 0;
+
+            resultado = ((porcentaje)*(Math.Pow((Math.E),(-mu*(1-porcentaje)*tiempo))));
+
+            return resultado;
+
+        }
+
+        public double esperarSistema(double mu, double porcentaje, int tiempo)
+        {
+            double resultado = 0;
+
+            resultado = ((Math.Pow((Math.E), (-mu * (1 - porcentaje) * tiempo))));
+
+            return resultado;
+
+        }
+
+
+        //Arreglar bien esto 
+        public double resultadoN(string opcion, double[] resultados, int n, double CxH)
+        {
+            double resultado = 0;
+            if (opcion=="n")
+            {
+                for (int i = 0; i < resultados.Length; i++)
+                {
+                    if (i == n)
+                    {
+                        resultado = resultado + resultados[i];
+                    }
+                }
+            }
+
+            if (opcion == "n>")
+            {
+                for (int i=0; i<resultados.Length; i++)
+                {
+                    if (i<=n)
+                    {
+                        resultado = resultado + resultados[i];
+                    }
+                    
+                }
+                resultado = 1 - resultado;
+            }
+            else if (opcion == "n<")
+            {
+                for (int i=0; i<resultados.Length;i++)
+                {
+                    if (i<n)
+                    {
+                        resultado = resultado + resultados[i];
+                    }
+                    
+                }
+
+            }else if (opcion == "n≥")
+            {
+                for (int i = 0; i < resultados.Length; i++)
+                {
+                    if (i<=n)
+                    {
+                        resultado = resultado + resultados[i];
+                    }
+                    
+                }
+                resultado = 1 - resultado;
+            }
+            else if (opcion == "n≤")
+            {
+                for (int i = 0; i < resultados.Length; i++)
+                {
+                    if (i<=n)
+                    {
+                        resultado = resultado + resultados[i];
+                    }
+                    
+                }
+            }
+
+            return resultado;
+        }
+
     }
 }
