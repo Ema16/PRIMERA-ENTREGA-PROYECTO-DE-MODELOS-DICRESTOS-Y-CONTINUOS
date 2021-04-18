@@ -39,5 +39,12 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             formulario.Show();
 
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Form5 form = new Form5();
+            this.Hide();
+            form.Show();
+        }
     }
 }

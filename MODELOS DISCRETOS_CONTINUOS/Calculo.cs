@@ -584,5 +584,131 @@ namespace MODELOS_DISCRETOS_CONTINUOS
             return resultado;
         }
 
+
+        //Formulas de la Regresion Lineal
+        public double[] XY(List<double> datosX, List<double> datosY)
+        {
+            double[] resultados = new double[datosX.Count];
+            for (int i=0; i<datosX.Count; i++)
+            {
+
+                resultados[i] = datosX[i] * datosY[i];
+
+            }
+            return resultados;
+        }
+
+        public double[] XCuadrado(List<double> datosX)
+        {
+            double[] resultados = new double[datosX.Count];
+            for (int i = 0; i < datosX.Count; i++)
+            {
+
+                resultados[i] = Math.Pow(datosX[i],2);
+
+            }
+            return resultados;
+        }
+
+        public double Sumatorias(List<double> datosXY)
+        {
+            double resultado=0;
+            for (int i=0; i<datosXY.Count; i++)
+            {
+                resultado = resultado + datosXY[i];
+            }
+            return resultado;
+            
+        }
+
+        public double SumatoriasXY(double[] datosXY)
+        {
+            double resultado = 0;
+            for (int i = 0; i < datosXY.Length; i++)
+            {
+                resultado = resultado + datosXY[i];
+            }
+            return resultado;
+
+        }
+
+        public double pendienteRecta(double totalMuestras, double sumXY, double sumX, double sumY, double sumxCuadrado)
+        {
+            double resultado = 0;
+
+            resultado = (((totalMuestras*sumXY)-(sumX*sumY))/((totalMuestras*sumxCuadrado)-(Math.Pow(sumX,2))));
+            return resultado;
+        }
+
+        public double coeficientePosicion(double totalMuestras, double sumXY, double sumX, double sumY, double sumxCuadrado)
+        {
+            double resultado = 0;
+            resultado = (((sumxCuadrado*sumY)-(sumX*sumXY)) / ((totalMuestras * sumxCuadrado) - (Math.Pow(sumX, 2))));
+            return resultado;
+        }
+
+        public double coeficienteCorrelacion(double totalMuestras, double sumXY, double sumX, double sumY, double sumxCuadrado, double sumyCuadrado)
+        {
+            double resultado = 0;
+
+            resultado = (((totalMuestras*sumXY)-(sumX*sumY))/(Math.Sqrt(((totalMuestras*sumxCuadrado)-(Math.Pow(sumX,2)))*((totalMuestras* sumyCuadrado) -(Math.Pow(sumY,2))))));
+
+            return resultado;
+
+        }
+
+
+        //y = mx+b;
+        public double[] NuevosDatos(List<double> datosX, double m, double b)
+        {
+            double[] resultados = new double[datosX.Count];
+            for (int i = 0; i < datosX.Count; i++)
+            {
+
+                resultados[i] = (m * datosX[i]) + b;
+
+            }
+            return resultados;
+        }
+
+        public double[] restaNuevosDatos(List<double> datosY, double[] nuevosDatos)
+        {
+            double[] resultados = new double[datosY.Count];
+            for (int i = 0; i < datosY.Count; i++)
+            {
+
+                resultados[i] = datosY[i]-nuevosDatos[i];
+
+            }
+            return resultados;
+        }
+
+        public double[] restaNuevosDatosCuadrado(double[] nuevosDatos)
+        {
+            double[] resultados = new double[nuevosDatos.Length];
+            for (int i = 0; i < nuevosDatos.Length; i++)
+            {
+
+                resultados[i] = Math.Pow(nuevosDatos[i],2);
+
+            }
+            return resultados;
+        }
+
+        public double errorEstandar(double[] nuevosDatos)
+        {
+            double resultado = 0;
+            double temp = 0;
+            for (int i=0; i<nuevosDatos.Length; i++)
+            {
+                temp = temp + nuevosDatos[i];
+            }
+
+            resultado = Math.Sqrt((temp)/((nuevosDatos.Length-2)));
+
+            return resultado;
+
+        }
+
     }
 }

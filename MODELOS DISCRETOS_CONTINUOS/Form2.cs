@@ -160,5 +160,56 @@ namespace MODELOS_DISCRETOS_CONTINUOS
                 fs.Close();
             }
         }
+
+        public void Mostrar2(double[] resultados1, double[] resultados2, string opcion)
+        {
+            foreach (var series in chart1.Series)
+            {
+                series.Points.Clear();
+            }
+            chart1.Titles.Clear();
+            chart1.Series.Clear();
+            Series serie;
+
+            int contador = 0;
+            double PA = 0;
+            ChartArea CA = chart1.ChartAreas[0];
+            CA.AxisX.ScaleView.Zoomable = true;
+            CA.CursorX.AutoScroll = true;
+            CA.CursorX.IsUserSelectionEnabled = true;
+
+            CA.AxisY.ScaleView.Zoomable = true;
+            CA.CursorY.AutoScroll = true;
+            CA.CursorY.IsUserSelectionEnabled = true;
+
+            if (opcion.Equals("lineal1"))
+            {
+                chart1.Palette = ChartColorPalette.Pastel;
+                chart1.Titles.Add("Representacion Grafica");
+                chart1.Series.Add("x" + "       " + "f(x)");
+
+                for (int i = 0; i < resultados1.Length; i++)
+                {
+                    chart1.Series[0].Points.AddXY(resultados1[i], resultados2[i]);
+                    chart1.Series[0].ChartType = SeriesChartType.Line;
+
+                }
+
+            }
+            else if (opcion.Equals("lineal2"))
+            {
+                chart1.Palette = ChartColorPalette.Pastel;
+                chart1.Titles.Add("Representacion Grafica");
+                chart1.Series.Add("x" + "       " + "f(x)");
+
+                for (int i = 0; i < resultados1.Length; i++)
+                {
+                    
+                    chart1.Series[0].Points.AddXY(resultados1[i], resultados2[i]);
+                    chart1.Series[0].ChartType = SeriesChartType.Line;
+
+                }
+            }
+        }
     }
 }
